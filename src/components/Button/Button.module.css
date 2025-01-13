@@ -1,0 +1,29 @@
+.button {
+    width: 120px;
+    height: 80px;
+    border-radius: 10px;
+    color: white;
+    transition: .1s linear;
+    background: #807557;
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.button:hover {
+    box-shadow: 1px 1px #d1c49f, 2px 2px #3a3337;
+    top: -2px;
+    left: -2px;
+}
+
+.button:disabled {
+    border-radius: 10px;
+    color: white;
+    background: #868385;
+    transition: none;
+    top: 0;
+    left: 0;
+    box-shadow: none;
+}

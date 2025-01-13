@@ -1,0 +1,7 @@
+.counterValue {
+    font-size: 50px;
+    font-weight: bold;
+}
+.counterMaxValue {
+    color: tomato;
+}
