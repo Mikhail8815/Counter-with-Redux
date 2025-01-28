@@ -1,10 +1,12 @@
 import {combineReducers, legacy_createStore} from "redux";
 import {counterReducer} from "./counter-reducer";
 import {valuesReducer} from "./value-reducer";
+import {errorsReducer} from "./error-reducer";
 
 const rootReducer = combineReducers({
     count: counterReducer,
     values: valuesReducer,
+    errors: errorsReducer
 })
 
 export type RootState = ReturnType<typeof store.getState>

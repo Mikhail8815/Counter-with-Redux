@@ -3,18 +3,16 @@ import {Button} from '../Button/Button';
 import s from './ButtonsCounter.module.css'
 import {VisibleComponentType} from '../Counter/Counter';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {resetCounterAC} from "../../app/counter-reducer";
+import {incrementCounterAC, resetCounterAC} from "../../app/counter-reducer";
 import {selectValues} from "../../app/selectors";
 
 type ButtonsCounterProps = {
-    countIncrement: () => void
     disabledButtonInc: boolean
     disabledButtonReset: boolean
     changeVisibleComponent: (visComp: VisibleComponentType) => void
 }
 
 export const ButtonsCounter = ({
-                                   countIncrement,
                                    changeVisibleComponent,
                                    disabledButtonInc,
                                    disabledButtonReset
@@ -25,6 +23,9 @@ export const ButtonsCounter = ({
 
     const resetCounter = () => {
         dispatch(resetCounterAC(startValue))
+    }
+    const countIncrement = () => {
+        dispatch(incrementCounterAC())
     }
 
     return (

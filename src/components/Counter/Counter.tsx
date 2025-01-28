@@ -1,28 +1,25 @@
 import React, {useState} from 'react';
-import { DisplayCounter } from '../DisplayCounter/DisplayCounter';
-import { DisplaySettings } from '../DisplaySettings/DisplaySettings';
-import { ButtonsCounter } from '../ButtonsCounter/ButtonsCounter';
-import { ButtonsSettings } from '../ButtonsSattings/ButtonsSattings';
+import {DisplayCounter} from '../DisplayCounter/DisplayCounter';
+import {DisplaySettings} from '../DisplaySettings/DisplaySettings';
+import {ButtonsCounter} from '../ButtonsCounter/ButtonsCounter';
+import {ButtonsSettings} from '../ButtonsSattings/ButtonsSattings';
 import s from './Counter.module.css'
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {selectCount} from "../../app/selectors";
+import {errors, selectCount, selectValues} from "../../app/selectors";
 import {setStartValueAC} from "../../app/counter-reducer";
 
 export type VisibleComponentType = 'settings' | 'counter'
 
-type CounterPropsType = {
-    count: number,
-    maxValue: number
-    startValue: number
-    countIncrement: ()=>void
-}
 
-export const Counter = ({count, maxValue, startValue, countIncrement}: CounterPropsType) => {
+export const Counter = () => {
 
     const [visibleComponent, setVisibleComponent] = useState<VisibleComponentType>('settings')
 
-    const [maxValueError, setMaxValueError] = useState<string | null>(null) 
-    const [startValueError, setStartValueError] = useState<string | null>(null)
+    const maxValue = useAppSelector(selectValues).maxValue
+    const startValue = useAppSelector(selectValues).startValue
+    const startValueError = useAppSelector(errors).startValueError;
+    const maxValueError = useAppSelector(errors).maxValueError;
+    const count = useAppSelector(selectCount);
 
     const dispatch = useAppDispatch();
  
@@ -39,21 +36,16 @@ export const Counter = ({count, maxValue, startValue, countIncrement}: CounterPr
     return (
         <div className={s.counter}> 
             <div>
-                {visibleComponent === 'counter' &&  <DisplayCounter count={count} maxValue={maxValue}/>}
+                {visibleComponent === 'counter' &&  <DisplayCounter maxValue={maxValue}/>}
                 {visibleComponent === 'settings' && <DisplaySettings
                                                       maxValue={maxValue}
                                                       startValue={startValue}
-                                                      maxValueError={maxValueError}
-                                                      startValueError={startValueError}
-                                                      setMaxValueError={setMaxValueError}
-                                                      setStartValueError={setStartValueError}
                                                       />}
     
             </div>   
             <div>
                 {visibleComponent === 'counter' &&  <ButtonsCounter 
                                                     changeVisibleComponent={changeVisibleComponent}
-                                                    countIncrement={countIncrement}
                                                     disabledButtonInc={isButtonIncrementDisabled}
                                                     disabledButtonReset={isButtonResetDisabled}
                                                     />}

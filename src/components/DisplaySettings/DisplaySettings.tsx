@@ -1,38 +1,39 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './DisplaySattings.module.css'
-import {useAppDispatch} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {setMaxValueAC, setStartValueAC} from "../../app/value-reducer";
+import {errors} from "../../app/selectors";
+import {setMaxValueErrorAC, setStartValueErrorAC} from "../../app/error-reducer";
 
 type DisplaySettingsProps = {
     maxValue: number
     startValue: number
-    maxValueError: string | null
-    startValueError: string | null
-    setStartValueError: (val: string | null) => void
-    setMaxValueError: (val: string | null) => void
 }
 
-export const DisplaySettings = ({setStartValueError, setMaxValueError, maxValue, startValue, maxValueError, startValueError}: DisplaySettingsProps) => {
+export const DisplaySettings = ({maxValue, startValue}: DisplaySettingsProps) => {
 
     const dispatch = useAppDispatch();
 
+    const startValueError = useAppSelector(errors).startValueError
+    const maxValueError = useAppSelector(errors).maxValueError
+
     const checkErrorMaxValue = (value: number) => {
         if (value <= 0 || value <= startValue) {
-            setMaxValueError('Error')
+            dispatch(setMaxValueErrorAC('Error'))
         } else if (value > startValue && startValue >= 0) {
-            setMaxValueError(null)
-            setStartValueError(null)
+            dispatch(setMaxValueErrorAC(null))
+            dispatch(setStartValueErrorAC(null))
         }
     }
 
     const checkErrorStartValue = (value: number) => {
         if (value < 0) {
-            setStartValueError('Error')
+            dispatch(setStartValueErrorAC('Error'))
         } else if (value >= maxValue) {
-            setStartValueError('Error')
+            dispatch(setStartValueErrorAC('Error'))
         } else {
-            setMaxValueError(null)
-            setStartValueError(null)
+            dispatch(setMaxValueErrorAC(null))
+            dispatch(setStartValueErrorAC(null))
         }
     }
 

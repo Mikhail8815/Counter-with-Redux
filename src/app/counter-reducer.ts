@@ -47,7 +47,7 @@ export const setStartValueAC = (startValue: number) => {
 
 //Reducer
 
-export const counterReducer = (state: number = initialState, action: ActionsType): number => {
+export const counterReducer = (state = initialState, action: ActionsType): number => {
     switch (action.type) {
         case 'INCREMENT-COUNTER': {
             return state = state + 1
